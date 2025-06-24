@@ -1,0 +1,24 @@
+services:
+  signoz:
+    container_name: signoz
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SIGNOZ_ADMIN_EMAIL: admin@signoz.local
+      SIGNOZ_ADMIN_PASSWORD: admin123
+      SIGNOZ_ADMIN_NAME: Admin
+      SIGNOZ_TELEMETRY_ENABLED: false
+    ports:
+      - 9999:8080
+      - 4317:4317
+      - 4318:4318
+    volumes:
+      - signoz_db_telemetry:/var/lib/clickhouse
+      - signoz_db_application:/var/lib/signoz
+
+volumes:
+  signoz_db_telemetry:
+    name: signoz_db_telemetry
+  signoz_db_application:
+    name: signoz_db_application
